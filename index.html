@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>미요일 운영 시스템 관리 (모바일/PC 지원)</title>
+  <title>미요일 운영 시스템 관리</title>
   
   <!-- PDF & 이미지 저장 라이브러리 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -29,11 +29,9 @@
     }
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     
-    /* PC/기본 스타일 */
     html, body { width: 100%; min-height: 100%; margin: 0; background: var(--bg); color: var(--text); font-size: 13px; line-height: 1.25; }
     body { display: flex; flex-direction: column; overflow-x: hidden; }
     
-    /* 상단 헤더 반응형 */
     header { 
       background: #fff; 
       border-bottom: 1px solid var(--border); 
@@ -49,15 +47,15 @@
     .brand { font-size: 15px; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 6px; letter-spacing: -0.3px; }
     .sync-status { font-size: 11px; padding: 2px 7px; border-radius: 10px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
     .sync-online { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
-    .sync-offline { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .sync-saved { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
 
     .header-actions { display: flex; gap: 4px; flex-wrap: wrap; }
     .btn-sm { padding: 5px 8px; border: 1px solid var(--border); background: #fff; border-radius: 4px; cursor: pointer; font-size: 11.5px; font-weight: 600; white-space: nowrap; }
     .btn-sm:hover { background: #f1f5f9; }
     .btn-pdf { background: #dc2626 !important; color: #fff !important; border: none !important; }
     .btn-img { background: #059669 !important; color: #fff !important; border: none !important; }
+    .btn-reset { background: #f1f5f9; color: #64748b; }
     
-    /* 모바일 전용 뷰 전환 탭 */
     .mobile-screen-toggle {
       display: none;
       width: 100%;
@@ -83,11 +81,9 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    /* 메인 2단 레이아웃 */
     .app-container { display: flex; flex: 1; min-height: calc(100vh - 44px); position: relative; }
     .main-content { flex: 1; padding: 8px 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; width: 100%; }
     
-    /* 우측 사이드바 */
     .ai-sidebar { width: 420px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
     .sidebar-tabs { display: flex; border-bottom: 1px solid var(--border); background: #f8fafc; flex-shrink: 0; }
     .sidebar-tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 13px; cursor: pointer; border: none; background: transparent; color: var(--text-muted); font-weight: 600; }
@@ -100,8 +96,6 @@
 
     .boss-manual-card { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; font-size: 12px; line-height: 1.45; color: #334155; }
     .boss-manual-title { font-weight: 800; font-size: 13px; color: #0f172a; margin-bottom: 6px; }
-    .boss-rule-list { margin: 0; padding-left: 0; list-style: none; }
-    .boss-rule-list li { margin-bottom: 4px; font-size: 12px; }
     .boss-example-item { display: flex; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 8px; margin-top: 4px; cursor: pointer; font-size: 12px; }
     .boss-tag-prefix { font-weight: 700; color: #334155; width: 75px; flex-shrink: 0; }
     .boss-tag-command { color: #1e293b; flex: 1; }
@@ -111,16 +105,14 @@
     .chat-input { flex: 1; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; outline: none; }
     .chat-send-btn { background: #2563eb; color: #fff; border: none; padding: 0 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600; }
 
-    /* 상단 모드 및 지점 바 */
     .view-control-bar { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; flex-wrap: wrap; gap: 6px; }
     .view-mode-toggle { display: flex; gap: 4px; }
     .mode-btn { padding: 5px 10px; border: 1px solid var(--border); background: #f1f5f9; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 700; }
     .mode-btn.active { background: #1e293b; color: #fff; border-color: #1e293b; }
 
     .nav-tabs { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
-    .tab-btn { padding: 5px 10px; border: 1px solid var(--border); background: #fff; border-radius: 5px; cursor: grab; font-size: 12px; font-weight: 600; }
+    .tab-btn { padding: 5px 10px; border: 1px solid var(--border); background: #fff; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; }
     .tab-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-    .drag-guide-text { font-size: 11px; color: var(--text-muted); margin-left: 2px; }
 
     .multi-selectors { display: none; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; flex-wrap: wrap; }
     .multi-selectors select { padding: 4px 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; }
@@ -128,7 +120,6 @@
     .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
     .section-title { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; }
 
-    /* 타임테이블 */
     .grid-view-container { display: grid; gap: 6px; }
     .grid-view-container.cols-1 { grid-template-columns: 1fr; }
     .grid-view-container.cols-2 { grid-template-columns: 1fr 1fr; }
@@ -163,7 +154,6 @@
     .bg-B { background-color: #0891b2; }
     .bg-기타 { background-color: #475569; }
 
-    /* 인원 체크 */
     .solo-check-card { background: #fff; }
     .check-subtitle { font-size: 11.5px; color: var(--text-muted); margin-bottom: 4px; }
     .check-list-container { border: 1px solid #e2e8f0; border-radius: 6px; background: #fafbfc; padding: 4px 8px; display: flex; flex-direction: column; gap: 3px; }
@@ -176,7 +166,6 @@
     .check-tag-ok { background: #f1f5f9; color: #64748b; font-size: 11px; padding: 2px 6px; border-radius: 12px; }
     .check-time-text { color: #1e293b; font-size: 12px; font-weight: 600; }
 
-    /* 시간 수정 테이블 */
     .edit-container { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; background: #fff; -webkit-overflow-scrolling: touch; }
     .edit-table-custom { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 600px; }
     .edit-table-custom th { background: #f8fafc; border-bottom: 1px solid #cbd5e1; border-right: 1px solid #e2e8f0; padding: 5px 4px; font-weight: 700; font-size: 12px; color: #334155; }
@@ -194,7 +183,6 @@
     .action-btn { background: #0284c7; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; }
     .del-btn { background: transparent; border: none; color: #ef4444; font-weight: bold; cursor: pointer; font-size: 16px; }
 
-    /* 모달 팝업 반응형 */
     .time-picker-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.5); z-index: 2000; justify-content: center; align-items: center; padding: 16px; }
     .picker-dialog { background: #ffffff; border-radius: 10px; width: 100%; max-width: 330px; border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
     .picker-header { font-size: 14px; font-weight: 700; color: #0f172a; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; }
@@ -204,33 +192,18 @@
     .btn-picker-apply { background: #2563eb; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
     .btn-picker-clear { background: #f1f5f9; color: #ef4444; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
 
-    /* ========================================================
-       ★ 스마트폰/모바일 화면 최적화 미디어 쿼리 (<= 768px) ★
-       ======================================================== */
     @media (max-width: 768px) {
       body { height: auto; min-height: 100vh; overflow-y: auto; }
       .app-container { flex-direction: column; min-height: auto; }
-      
-      /* 모바일 상단 탭 전환 바 표시 */
       .mobile-screen-toggle { display: flex; }
-      
-      /* 기본적으로 스케줄 화면을 보여주고, AI 채팅은 탭 전환 시 노출 */
       .main-content { display: flex; padding: 6px; }
       .ai-sidebar { display: none; width: 100%; border-left: none; border-top: 1px solid var(--border); min-height: calc(100vh - 120px); }
-
-      /* 모바일 토글 액티브 클래스 */
       body.show-ai-mode .main-content { display: none; }
       body.show-ai-mode .ai-sidebar { display: flex; }
-
-      /* 폰트 및 간격 최적화 */
       header { padding: 8px 10px; }
       .brand { font-size: 14px; }
       .btn-sm { padding: 4px 7px; font-size: 11px; }
-      
-      /* 다중 비교 모바일에서는 1열 강제 */
-      .grid-view-container.cols-2,
-      .grid-view-container.cols-3 { grid-template-columns: 1fr !important; }
-      
+      .grid-view-container.cols-2, .grid-view-container.cols-3 { grid-template-columns: 1fr !important; }
       .table-container { max-height: 48vh; }
       .time-col { width: 85px; min-width: 85px; }
     }
@@ -242,17 +215,16 @@
     <div style="display:flex; align-items:center; gap:8px; width:100%; justify-content:space-between;">
       <div class="brand">
         <span>🏢 미요일 스케줄</span>
-        <span class="sync-status sync-offline" id="sync-status-badge">● 로컬 저장 모드</span>
+        <span class="sync-status sync-saved" id="sync-status-badge">💾 기기 자동저장 켜짐</span>
       </div>
       <div class="header-actions">
         <button class="btn-sm btn-pdf" onclick="exportToPDF()">📄 PDF</button>
         <button class="btn-sm btn-img" onclick="exportToImage()">🖼️ 이미지</button>
-        <button class="btn-sm" onclick="exportData()">💾 백업</button>
-        <button class="btn-sm" style="background:#10b981; color:#fff; border:none;" onclick="shareLink()">🔗 공유</button>
+        <button class="btn-sm btn-reset" onclick="resetToDefault()">🔄 초기화</button>
+        <button class="btn-sm" style="background:#10b981; color:#fff; border:none;" onclick="shareLink()">🔗 링크 복사</button>
       </div>
     </div>
 
-    <!-- 모바일 전용 상단 화면 전환 탭 -->
     <div class="mobile-screen-toggle" data-html2canvas-ignore="true">
       <button class="active" id="btn-m-schedule" onclick="setMobileView('schedule')">📅 근무 스케줄 표</button>
       <button id="btn-m-ai" onclick="setMobileView('ai')">💬 AI 수정 채팅</button>
@@ -325,7 +297,6 @@
     </div>
   </div>
 
-  <!-- 시간 선택 피커 모달 -->
   <div class="time-picker-modal" id="time-picker-modal" onclick="if(event.target===this) closeTimePicker()">
     <div class="picker-dialog">
       <div class="picker-header">
@@ -354,7 +325,7 @@
   </div>
 
 <script>
-// 사장님의 Firebase 설정 키 연동 완료
+// Firebase 설정
 const firebaseConfig = {
   apiKey: "AIzaSyCgtk7b1oCUYeCQOpNPeowb4le1SJIlyno",
   authDomain: "meeyoill-schedule.firebaseapp.com",
@@ -366,21 +337,17 @@ const firebaseConfig = {
 };
 
 let db = null;
-let isCloudOnline = false;
-
 try {
   if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
     firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
-    isCloudOnline = true;
   }
 } catch (e) {
-  console.warn("Firebase 초기화 에러:", e);
+  console.warn(e);
 }
 
 const days = ['월', '화', '수', '목', '금', '토', '일'];
 const defaultBranchOrder = ['목동점', '목동점 V2', '등촌점', '등촌점 V2', '상수점', '상수점 V2'];
-let allBranchKeys = JSON.parse(localStorage.getItem('smart_schedule_branch_order')) || defaultBranchOrder;
 
 const mokdongOperatingHours = {
   월: { start: 16, end: 24, label: "16:00~24:00" }, 화: { start: 16, end: 24, label: "16:00~24:00" },
@@ -438,10 +405,7 @@ const defaultData = {
       { name: "B", type: "직원", shifts: { 월: "", 화: "11:00~18:00", 수: "11:00~18:00", 목: "11:00~16:00", 금: "11:00~18:00", 토: "11:00~16:00", 일: "" } }
     ]
   },
-  "상수점": {
-    schedule: sangsuOperatingHours,
-    staffList: []
-  },
+  "상수점": { schedule: sangsuOperatingHours, staffList: [] },
   "상수점 V2": {
     schedule: sangsuOperatingHours,
     staffList: [
@@ -451,7 +415,20 @@ const defaultData = {
   }
 };
 
-let branchData = JSON.parse(localStorage.getItem('smart_schedule_cloud_data')) || defaultData;
+// ★ 핵심: 내 기기의 로컬 저장소 우선 로드
+let branchData = null;
+try {
+  const localSaved = localStorage.getItem('miyoil_permanent_schedule_data');
+  if (localSaved) {
+    branchData = JSON.parse(localSaved);
+  }
+} catch(e) {}
+
+if (!branchData) {
+  branchData = defaultData;
+}
+
+let allBranchKeys = JSON.parse(localStorage.getItem('miyoil_permanent_branch_order')) || defaultBranchOrder;
 let appViewMode = 'single';
 let currentBranch = allBranchKeys[0] || "목동점 V2";
 let multiSlots = ["목동점 V2", "등촌점 V2", "상수점 V2"];
@@ -459,11 +436,9 @@ let multiCount = 3;
 let currentChatMode = "boss";
 let pickerContext = { branch: '', idx: -1, day: '' };
 
-/* 모바일 전용 화면 전환 함수 */
 function setMobileView(view) {
   const btnSchedule = document.getElementById('btn-m-schedule');
   const btnAi = document.getElementById('btn-m-ai');
-
   if (view === 'schedule') {
     document.body.classList.remove('show-ai-mode');
     btnSchedule.classList.add('active');
@@ -475,51 +450,34 @@ function setMobileView(view) {
   }
 }
 
-// 실시간 클라우드 리스너 연결
-function initCloudSync() {
-  const badge = document.getElementById('sync-status-badge');
-  if (!isCloudOnline || !db) {
-    badge.className = "sync-status sync-offline";
-    badge.innerText = "● 로컬 저장 모드";
-    return;
-  }
-
-  badge.className = "sync-status sync-online";
-  badge.innerText = "⚡ 실시간 클라우드 연결됨";
-
-  db.collection("schedules").doc("main_data").onSnapshot((doc) => {
-    if (doc.exists) {
-      const cloudData = doc.data();
-      if (cloudData.branchData) {
-        branchData = cloudData.branchData;
-        localStorage.setItem('smart_schedule_cloud_data', JSON.stringify(branchData));
-      }
-      if (cloudData.allBranchKeys) {
-        allBranchKeys = cloudData.allBranchKeys;
-        localStorage.setItem('smart_schedule_branch_order', JSON.stringify(allBranchKeys));
-      }
-      render();
-    } else {
-      saveState();
-    }
-  }, (error) => {
-    console.error("클라우드 동기화 실패:", error);
-    badge.className = "sync-status sync-offline";
-    badge.innerText = "● 클라우드 에러 (규칙 확인)";
-  });
-}
-
+// ★ 기기 영구 저장 함수 (수정 즉시 실행됨)
 function saveState() {
-  localStorage.setItem('smart_schedule_cloud_data', JSON.stringify(branchData));
-  localStorage.setItem('smart_schedule_branch_order', JSON.stringify(allBranchKeys));
+  localStorage.setItem('miyoil_permanent_schedule_data', JSON.stringify(branchData));
+  localStorage.setItem('miyoil_permanent_branch_order', JSON.stringify(allBranchKeys));
 
-  if (isCloudOnline && db) {
+  // Firebase 동기화도 백그라운드에서 자동 보조 실행
+  if (db) {
     db.collection("schedules").doc("main_data").set({
       branchData: branchData,
       allBranchKeys: allBranchKeys,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }, { merge: true }).catch(err => console.error("클라우드 저장 에러:", err));
+    }, { merge: true }).catch(() => {});
   }
+}
+
+// 클라우드 백그라운드 리스너
+function initCloudSync() {
+  if (!db) return;
+  db.collection("schedules").doc("main_data").onSnapshot((doc) => {
+    if (doc.exists) {
+      const cloudData = doc.data();
+      // 내 로컬에 데이터가 전혀 없을 때만 서버 데이터를 가져옴 (내 수정 덮어쓰기 방지)
+      if (!localStorage.getItem('miyoil_permanent_schedule_data') && cloudData.branchData) {
+        branchData = cloudData.branchData;
+        render();
+      }
+    }
+  }, () => {});
 }
 
 function parseTimeToDecimal(timeStr) {
@@ -565,62 +523,13 @@ function setAppViewMode(mode) {
 function renderTabs() {
   const container = document.getElementById('single-tabs');
   container.innerHTML = '';
-
   allBranchKeys.forEach(branch => {
     const btn = document.createElement('button');
     btn.className = `tab-btn ${branch === currentBranch ? 'active' : ''}`;
     btn.innerText = branch;
-    btn.draggable = true;
-    btn.dataset.branch = branch;
-
     btn.onclick = () => switchBranch(branch);
-
-    btn.addEventListener('dragstart', handleDragStart);
-    btn.addEventListener('dragover', handleDragOver);
-    btn.addEventListener('drop', handleDrop);
-    btn.addEventListener('dragend', handleDragEnd);
-
     container.appendChild(btn);
   });
-}
-
-let draggedTab = null;
-
-function handleDragStart(e) {
-  draggedTab = this;
-  this.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/plain', this.dataset.branch);
-}
-
-function handleDragOver(e) {
-  if (e.preventDefault) e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  return false;
-}
-
-function handleDrop(e) {
-  if (e.stopPropagation) e.stopPropagation();
-  if (draggedTab !== this) {
-    const fromBranch = draggedTab.dataset.branch;
-    const toBranch = this.dataset.branch;
-
-    const fromIdx = allBranchKeys.indexOf(fromBranch);
-    const toIdx = allBranchKeys.indexOf(toBranch);
-
-    allBranchKeys.splice(fromIdx, 1);
-    allBranchKeys.splice(toIdx, 0, fromBranch);
-
-    saveState();
-    renderTabs();
-    initMultiSelectors();
-  }
-  return false;
-}
-
-function handleDragEnd() {
-  this.classList.remove('dragging');
-  draggedTab = null;
 }
 
 function initMultiSelectors() {
@@ -665,7 +574,6 @@ function render() {
 function renderGridView() {
   const container = document.getElementById('grid-view-container');
   container.innerHTML = '';
-
   let branchesToRender = appViewMode === 'single' ? [currentBranch] : multiSlots.slice(0, multiCount);
   container.className = `grid-view-container cols-${branchesToRender.length}`;
 
@@ -717,14 +625,11 @@ function renderGridView() {
       const nextH = h + 1;
       let startStr = h >= 24 ? `익일0${h-24}:00` : `${h < 10 ? '0' : ''}${h}:00`;
       let endStr = nextH >= 24 ? (nextH === 24 ? `익일00:00` : `0${nextH-24}:00`) : `${nextH < 10 ? '0' : ''}${nextH}:00`;
-      const timeRangeLabel = `${startStr}~${endStr}`;
-
-      tableHtml += `<tr><td class="time-col">${timeRangeLabel}</td>`;
+      tableHtml += `<tr><td class="time-col">${startStr}~${endStr}</td>`;
 
       days.forEach(d => {
         const op = data.schedule[d];
         const isOperating = h >= op.start && h < op.end;
-        
         const workers = data.staffList.filter(s => {
           const shift = parseShift(s.shifts[d]);
           return shift && shift.start < (h + 1) && shift.end > h;
@@ -764,66 +669,37 @@ function renderSoloCheck() {
         const shift = parseShift(s.shifts[d]);
         return shift && shift.start < (h + 1) && shift.end > h;
       });
-
       if (workers.length === 0) emptyHours.push(h);
       else if (workers.length === 1) soloHours.push(h);
     }
 
     const row = document.createElement('div');
     row.className = 'check-day-row';
-
     let badgesHtml = '';
     
     if (emptyHours.length > 0) {
-      badgesHtml += `
-        <div class="check-badge-line">
-          <span class="check-tag-empty">공백 ${emptyHours.length}h</span>
-          <span class="check-time-text">${formatHourRangesFormatted(emptyHours)}</span>
-        </div>
-      `;
+      badgesHtml += `<div class="check-badge-line"><span class="check-tag-empty">공백 ${emptyHours.length}h</span><span class="check-time-text">${formatHourRangesFormatted(emptyHours)}</span></div>`;
     }
-    
     if (soloHours.length > 0) {
-      badgesHtml += `
-        <div class="check-badge-line">
-          <span class="check-tag-solo">1인 ${soloHours.length}h</span>
-          <span class="check-time-text">${formatHourRangesFormatted(soloHours)}</span>
-        </div>
-      `;
+      badgesHtml += `<div class="check-badge-line"><span class="check-tag-solo">1인 ${soloHours.length}h</span><span class="check-time-text">${formatHourRangesFormatted(soloHours)}</span></div>`;
     }
-
     if (emptyHours.length === 0 && soloHours.length === 0) {
-      badgesHtml += `
-        <div class="check-badge-line">
-          <span class="check-tag-ok">충분 (2인이상)</span>
-        </div>
-      `;
+      badgesHtml += `<div class="check-badge-line"><span class="check-tag-ok">충분 (2인이상)</span></div>`;
     }
 
-    row.innerHTML = `
-      <div class="check-day-label">${d}</div>
-      <div class="check-badges-wrap">
-        ${badgesHtml}
-      </div>
-    `;
-
+    row.innerHTML = `<div class="check-day-label">${d}</div><div class="check-badges-wrap">${badgesHtml}</div>`;
     container.appendChild(row);
   });
 }
 
 function formatHourRangesFormatted(hours) {
   if (!hours.length) return '';
-  let ranges = [];
-  let start = hours[0];
-  let prev = hours[0];
-
+  let ranges = [], start = hours[0], prev = hours[0];
   for (let i = 1; i < hours.length; i++) {
-    if (hours[i] === prev + 1) {
-      prev = hours[i];
-    } else {
+    if (hours[i] === prev + 1) prev = hours[i];
+    else {
       ranges.push(`${formatFullH(start)}~${formatFullH(prev + 1)}`);
-      start = hours[i];
-      prev = hours[i];
+      start = hours[i]; prev = hours[i];
     }
   }
   ranges.push(`${formatFullH(start)}~${formatFullH(prev + 1)}`);
@@ -843,42 +719,18 @@ function renderEditTable() {
   const thead = document.getElementById('edit-thead');
   const tbody = document.getElementById('edit-tbody');
 
-  let theadHtml = `
-    <tr>
-      <th style="width: 100px;">구분</th>
-  `;
+  let theadHtml = `<tr><th style="width: 100px;">구분</th>`;
   days.forEach(d => {
-    const op = data.schedule[d];
-    theadHtml += `
-      <th>
-        ${d} <span class="op-mini-badge">${op.label}</span>
-      </th>
-    `;
+    theadHtml += `<th>${d} <span class="op-mini-badge">${data.schedule[d].label}</span></th>`;
   });
-  theadHtml += `
-      <th style="width: 70px;">주간</th>
-      <th style="width: 30px;"></th>
-    </tr>
-  `;
+  theadHtml += `<th style="width: 70px;">주간</th><th style="width: 30px;"></th></tr>`;
   thead.innerHTML = theadHtml;
-
   tbody.innerHTML = '';
-
-  if (data.staffList.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="10" class="empty-state">등록된 직원이 없습니다.</td></tr>`;
-    return;
-  }
 
   data.staffList.forEach((staff, idx) => {
     let totalHours = 0;
     const tr = document.createElement('tr');
-    
-    let rowHtml = `
-      <td style="text-align:left; padding-left:6px;">
-        <span class="type-pill pill-${staff.type}">${staff.type}</span>
-        <strong style="font-size:12.5px; color:#0f172a;">${staff.name}</strong>
-      </td>
-    `;
+    let rowHtml = `<td style="text-align:left; padding-left:6px;"><span class="type-pill pill-${staff.type}">${staff.type}</span><strong style="font-size:12.5px; color:#0f172a;">${staff.name}</strong></td>`;
 
     days.forEach(d => {
       const shiftStr = staff.shifts[d] || '';
@@ -890,9 +742,8 @@ function renderEditTable() {
         <td>
           <div class="schedule-cell-box">
             <div class="input-row">
-              <input class="edit-input-field" value="${shiftStr}" placeholder="-" 
-                onchange="updateShift('${activeBranch}', ${idx}, '${d}', this.value)" />
-              <button class="picker-btn" title="시간 선택" onclick="openTimePicker('${activeBranch}', ${idx}, '${d}')">🕒</button>
+              <input class="edit-input-field" value="${shiftStr}" placeholder="-" onchange="updateShift('${activeBranch}', ${idx}, '${d}', this.value)" />
+              <button class="picker-btn" onclick="openTimePicker('${activeBranch}', ${idx}, '${d}')">🕒</button>
             </div>
             ${hours > 0 ? `<span class="calculated-hours-text">${hours % 1 === 0 ? hours : hours.toFixed(1)}h</span>` : '<span class="calculated-hours-text" style="color:#cbd5e1;">-</span>'}
           </div>
@@ -900,11 +751,7 @@ function renderEditTable() {
       `;
     });
 
-    rowHtml += `
-      <td><strong style="font-size:13px; color:#2563eb;">${totalHours % 1 === 0 ? totalHours : totalHours.toFixed(1)}h</strong></td>
-      <td><button class="del-btn" onclick="removeStaff('${activeBranch}', ${idx})">×</button></td>
-    `;
-
+    rowHtml += `<td><strong style="font-size:13px; color:#2563eb;">${totalHours % 1 === 0 ? totalHours : totalHours.toFixed(1)}h</strong></td><td><button class="del-btn" onclick="removeStaff('${activeBranch}', ${idx})">×</button></td>`;
     tr.innerHTML = rowHtml;
     tbody.appendChild(tr);
   });
@@ -929,57 +776,43 @@ function addStaffRow(type) {
 }
 
 function removeStaff(branch, idx) {
-  const staff = branchData[branch].staffList[idx];
-  if (confirm(`[${branch}] ${staff.name}님을 삭제하시겠습니까?`)) {
+  if (confirm(`삭제하시겠습니까?`)) {
     branchData[branch].staffList.splice(idx, 1);
     saveState();
     render();
   }
 }
 
-/* 시간 피커 모달 */
 const timeOptionsList = [
-  "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-  "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-  "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
-  "18:00", "18:30", "19:00", "19:30", "20:00", "20:30",
-  "21:00", "21:30", "22:00", "22:30", "23:00", "23:30",
+  "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+  "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30",
+  "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30",
   "24:00", "01:00", "02:00"
 ];
 
 function initTimePickerOptions() {
   const startSel = document.getElementById('picker-start-select');
   const endSel = document.getElementById('picker-end-select');
-  
   startSel.innerHTML = timeOptionsList.map(t => `<option value="${t}">${t}</option>`).join('');
   endSel.innerHTML = timeOptionsList.map(t => `<option value="${t}">${t}</option>`).join('');
-
   startSel.onchange = updatePickerManualFromSelects;
   endSel.onchange = updatePickerManualFromSelects;
 }
 
 function updatePickerManualFromSelects() {
-  const s = document.getElementById('picker-start-select').value;
-  const e = document.getElementById('picker-end-select').value;
-  document.getElementById('picker-manual-input').value = `${s}~${e}`;
+  document.getElementById('picker-manual-input').value = `${document.getElementById('picker-start-select').value}~${document.getElementById('picker-end-select').value}`;
 }
 
 function openTimePicker(branch, idx, day) {
   pickerContext = { branch, idx, day };
-  const staff = branchData[branch].staffList[idx];
-  const currentVal = staff.shifts[day] || '';
-
-  document.getElementById('picker-title').innerText = `${staff.name} - ${day}요일 시간`;
+  const currentVal = branchData[branch].staffList[idx].shifts[day] || '';
+  document.getElementById('picker-title').innerText = `시간 설정 (${day}요일)`;
   document.getElementById('picker-manual-input').value = currentVal;
-
   if (currentVal.includes('~')) {
     const [s, e] = currentVal.split('~').map(t => t.trim());
-    const startSel = document.getElementById('picker-start-select');
-    const endSel = document.getElementById('picker-end-select');
-    if ([...startSel.options].some(o => o.value === s)) startSel.value = s;
-    if ([...endSel.options].some(o => o.value === e)) endSel.value = e;
+    if ([...document.getElementById('picker-start-select').options].some(o => o.value === s)) document.getElementById('picker-start-select').value = s;
+    if ([...document.getElementById('picker-end-select').options].some(o => o.value === e)) document.getElementById('picker-end-select').value = e;
   }
-
   document.getElementById('time-picker-modal').style.display = 'flex';
 }
 
@@ -991,9 +824,7 @@ function applyPickerTime() {
   const manual = document.getElementById('picker-manual-input').value.trim();
   const s = document.getElementById('picker-start-select').value;
   const e = document.getElementById('picker-end-select').value;
-
-  const finalValue = manual ? manual : `${s}~${e}`;
-  updateShift(pickerContext.branch, pickerContext.idx, pickerContext.day, finalValue);
+  updateShift(pickerContext.branch, pickerContext.idx, pickerContext.day, manual ? manual : `${s}~${e}`);
   closeTimePicker();
 }
 
@@ -1002,58 +833,40 @@ function applyPickerClear() {
   closeTimePicker();
 }
 
-/* PDF 및 이미지 내보내기 함수 */
 function exportToPDF() {
   const element = document.getElementById('print-area');
   const targetName = appViewMode === 'single' ? currentBranch : '다중지점비교';
-  
-  const opt = {
+  html2pdf().set({
     margin: [4, 4, 4, 4],
     filename: `미요일_${targetName}_스케줄.pdf`,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, logging: false },
+    html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
-  };
-
-  const pdfBtn = document.querySelector('.btn-pdf');
-  const originalText = pdfBtn.innerText;
-  pdfBtn.innerText = '변환중...';
-
-  html2pdf().set(opt).from(element).save().then(() => {
-    pdfBtn.innerText = originalText;
-  }).catch(err => {
-    alert('PDF 저장 중 문제가 발생했습니다.');
-    pdfBtn.innerText = originalText;
-  });
+  }).from(element).save();
 }
 
 function exportToImage() {
   const element = document.getElementById('print-area');
   const targetName = appViewMode === 'single' ? currentBranch : '다중지점비교';
-  
-  const imgBtn = document.querySelector('.btn-img');
-  const originalText = imgBtn.innerText;
-  imgBtn.innerText = '캡처중...';
-
-  html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    logging: false,
-    backgroundColor: '#f8fafc',
-    ignoreElements: (el) => el.getAttribute('data-html2canvas-ignore') === 'true'
-  }).then(canvas => {
+  html2canvas(element, { scale: 2, useCORS: true, backgroundColor: '#f8fafc', ignoreElements: el => el.getAttribute('data-html2canvas-ignore') === 'true' }).then(canvas => {
     const link = document.createElement('a');
     link.download = `미요일_${targetName}_스케줄.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
-    imgBtn.innerText = originalText;
-  }).catch(err => {
-    alert('이미지 저장 중 문제가 발생했습니다.');
-    imgBtn.innerText = originalText;
   });
 }
 
-/* AI 사이드바 */
+function resetToDefault() {
+  if (confirm("모든 수정을 취소하고 초기 기본값으로 되돌리시겠습니까?")) {
+    localStorage.removeItem('miyoil_permanent_schedule_data');
+    localStorage.removeItem('miyoil_permanent_branch_order');
+    branchData = JSON.parse(JSON.stringify(defaultData));
+    allBranchKeys = [...defaultBranchOrder];
+    saveState();
+    render();
+  }
+}
+
 function switchChatMode(mode) {
   currentChatMode = mode;
   document.getElementById('tab-ai-boss').className = `sidebar-tab ${mode === 'boss' ? 'active' : ''}`;
@@ -1065,49 +878,19 @@ function switchChatMode(mode) {
 function renderChatHistory() {
   const container = document.getElementById('chat-messages');
   const activeTarget = appViewMode === 'single' ? currentBranch : multiSlots[0];
-
   if (currentChatMode === 'boss') {
     container.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-        <span style="font-size:14px; font-weight:800; color:#0f172a;">효사장 전용 채팅</span>
-        <span style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; border-radius:12px; font-size:10.5px; font-weight:700; padding:1px 6px;">AI 무료</span>
-      </div>
-
       <div class="boss-manual-card">
-        <div class="boss-manual-title">▼ 사용 예시 (누르면 입력창에 들어감)</div>
-        <div class="boss-example-item" onclick="fillExample('목동점 혁기 목 14시~22시')">
-          <span class="boss-tag-prefix">시간 바꾸기</span>
-          <span class="boss-tag-command">목동점 혁기 목 14시~22시</span>
-        </div>
-        <div class="boss-example-item" onclick="fillExample('상수점 version2 A 수 빼줘')">
-          <span class="boss-tag-prefix">근무 빼기</span>
-          <span class="boss-tag-command">상수점 version2 A 수 빼줘</span>
-        </div>
-        <div class="boss-example-item" onclick="fillExample('등촌점 토,일 영업시간 11시~01시')">
-          <span class="boss-tag-prefix">영업시간</span>
-          <span class="boss-tag-command">등촌점 토,일 영업시간 11시~01시</span>
-        </div>
+        <div class="boss-manual-title">▼ 빠른 수정 예시 (클릭 시 자동 입력)</div>
+        <div class="boss-example-item" onclick="fillExample('목동점 혁기 목 14시~22시')"><span class="boss-tag-prefix">시간 변경</span><span class="boss-tag-command">목동점 혁기 목 14시~22시</span></div>
+        <div class="boss-example-item" onclick="fillExample('상수점 version2 A 수 빼줘')"><span class="boss-tag-prefix">근무 제외</span><span class="boss-tag-command">상수점 version2 A 수 빼줘</span></div>
       </div>
-
-      <div class="boss-footer-note">
-        지점 이름 없이 쓰면 현재 보고 있는 <b>${activeTarget}</b>에 자동 반영됩니다.
-      </div>
+      <div class="boss-footer-note">현재 지점: <b>${activeTarget}</b></div>
     `;
   } else if (currentChatMode === 'edit') {
-    container.innerHTML = `
-      <div class="chat-bubble ai">
-        <b>🤖 자연어 수정 요청</b><br>
-        예: <i>"상수점 V2 C 토요일 19시부터로 바꿔줘"</i>
-      </div>
-    `;
-  } else if (currentChatMode === 'feedback') {
-    container.innerHTML = `
-      <div class="chat-bubble ai">
-        <b>💡 AI 지점 진단</b><br>
-        현재 <b>[${activeTarget}]</b>의 피크타임 및 1인 근무 시간대를 진단합니다.
-      </div>
-      <button class="btn-sm" style="background:#2563eb; color:#fff; align-self:flex-start; margin-top:4px;" onclick="runScheduleAnalysis()">📊 지금 진단하기</button>
-    `;
+    container.innerHTML = `<div class="chat-bubble ai">🤖 자연어로 수정할 내용을 적어주세요.</div>`;
+  } else {
+    container.innerHTML = `<button class="btn-sm" style="background:#2563eb; color:#fff;" onclick="runScheduleAnalysis()">📊 공백/1인 진단 실행</button>`;
   }
 }
 
@@ -1120,37 +903,26 @@ function sendChatMessage() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   if (!text) return;
-
   const container = document.getElementById('chat-messages');
   container.innerHTML += `<div class="chat-bubble user">${text}</div>`;
   input.value = '';
-
-  setTimeout(() => {
-    processAICommand(text);
-    container.scrollTop = container.scrollHeight;
-  }, 300);
+  setTimeout(() => { processAICommand(text); container.scrollTop = container.scrollHeight; }, 200);
 }
 
 function processAICommand(text) {
   const container = document.getElementById('chat-messages');
   let targetBranch = currentBranch;
   let normalizedText = text.replace(/version2|버전2/gi, 'V2');
-  
   for (let b of allBranchKeys) {
     if (normalizedText.includes(b)) { targetBranch = b; break; }
   }
 
   if (normalizedText.includes('추가')) {
-    const isAlba = normalizedText.includes('알바');
-    const type = isAlba ? '알바' : '직원';
+    const type = normalizedText.includes('알바') ? '알바' : '직원';
     let words = normalizedText.replace(/직원|알바|추가|해줘|등록/g, ' ').trim().split(/\s+/);
     let name = words.find(w => !allBranchKeys.includes(w) && w !== 'V2');
-    
     if (name) {
-      branchData[targetBranch].staffList.push({
-        name: name, type: type,
-        shifts: { 월: "", 화: "", 수: "", 목: "", 금: "", 토: "", 일: "" }
-      });
+      branchData[targetBranch].staffList.push({ name, type, shifts: { 월:"", 화:"", 수:"", 목:"", 금:"", 토:"", 일:"" } });
       applyTimePattern(targetBranch, name, normalizedText);
       saveState();
       render();
@@ -1159,10 +931,9 @@ function processAICommand(text) {
     }
   }
 
-  if (normalizedText.includes('빼') || normalizedText.includes('삭제') || normalizedText.includes('휴무')) {
+  if (normalizedText.includes('빼') || normalizedText.includes('삭제')) {
     const targetStaff = branchData[targetBranch].staffList.find(s => normalizedText.includes(s.name));
     const targetDay = days.find(d => normalizedText.includes(d));
-
     if (targetStaff && targetDay) {
       targetStaff.shifts[targetDay] = "";
       saveState();
@@ -1174,9 +945,7 @@ function processAICommand(text) {
 
   let applied = false;
   branchData[targetBranch].staffList.forEach(staff => {
-    if (normalizedText.includes(staff.name)) {
-      applied = applyTimePattern(targetBranch, staff.name, normalizedText) || applied;
-    }
+    if (normalizedText.includes(staff.name)) applied = applyTimePattern(targetBranch, staff.name, normalizedText) || applied;
   });
 
   if (applied) {
@@ -1184,22 +953,18 @@ function processAICommand(text) {
     render();
     container.innerHTML += `<div class="chat-bubble ai">✅ [${targetBranch}] 스케줄 반영 완료</div>`;
   } else {
-    container.innerHTML += `<div class="chat-bubble ai">🤔 형식을 확인해주세요. (예: <i>상수점 V2 C 토 18시~23시</i>)</div>`;
+    container.innerHTML += `<div class="chat-bubble ai">🤔 형식을 확인해주세요. (예: 목동점 혁기 목 14시~22시)</div>`;
   }
 }
 
 function applyTimePattern(branch, staffName, text) {
   const staff = branchData[branch].staffList.find(s => s.name === staffName);
   if (!staff) return false;
-
   let targetDays = days.filter(d => text.includes(d));
   if (targetDays.length === 0) return false;
-
   let timeMatch = text.match(/(\d{1,2})(?:시|:00)?\s*~\s*(\d{1,2})(?:시|:00)?/);
   if (timeMatch) {
-    let s = timeMatch[1].padStart(2, '0') + ":00";
-    let e = timeMatch[2].padStart(2, '0') + ":00";
-    let shiftStr = `${s}~${e}`;
+    let shiftStr = `${timeMatch[1].padStart(2, '0')}:00~${timeMatch[2].padStart(2, '0')}:00`;
     targetDays.forEach(d => { staff.shifts[d] = shiftStr; });
     return true;
   }
@@ -1209,8 +974,6 @@ function applyTimePattern(branch, staffName, text) {
 function runScheduleAnalysis() {
   const activeBranch = appViewMode === 'single' ? currentBranch : multiSlots[0];
   const data = branchData[activeBranch];
-  const container = document.getElementById('chat-messages');
-
   let soloCount = 0, emptyCount = 0;
   days.forEach(d => {
     const op = data.schedule[d];
@@ -1223,23 +986,9 @@ function runScheduleAnalysis() {
       else if (workers.length === 1) soloCount++;
     }
   });
-
-  container.innerHTML += `
-    <div class="chat-bubble ai">
-      <b>📋 [${activeBranch}] 스케줄 진단</b><br>
-      • 1인 근무: <b>${soloCount}시간</b><br>
-      • 미배정 공백: <b>${emptyCount}시간</b>
-    </div>
+  document.getElementById('chat-messages').innerHTML += `
+    <div class="chat-bubble ai"><b>📋 [${activeBranch}] 진단</b><br>• 1인 근무: ${soloCount}h<br>• 공백: ${emptyCount}h</div>
   `;
-  container.scrollTop = container.scrollHeight;
-}
-
-function exportData() {
-  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(branchData, null, 2));
-  const dlAnchorElem = document.createElement('a');
-  dlAnchorElem.setAttribute("href", dataStr);
-  dlAnchorElem.setAttribute("download", `store_schedule_backup.json`);
-  dlAnchorElem.click();
 }
 
 function shareLink() {
@@ -1247,7 +996,6 @@ function shareLink() {
   alert("현재 링크가 복사되었습니다!");
 }
 
-// 초기화
 initTimePickerOptions();
 initCloudSync();
 render();
